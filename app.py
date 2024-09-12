@@ -17,6 +17,21 @@ class App(ctk.CTk):
         self.system_sub_title()
         self.system_main()
 
+    archive = pathlib.Path("Clients.xlsx")
+    if archive.exists():
+        pass
+    else:
+        archive =Workbook();
+        paper = archive.active
+        paper['A1']="Nome"
+        paper['B1']="Telefone"
+        paper['C1']="Endereço"
+        paper['D1']='Idade'
+        paper['E1']="Genêro"
+        paper['F1']="Observações"
+
+        archive.save("Clientes.xlsx")
+
     def layout_config(self):
         self.title("Sistema de Gestão de Clientes")
         self.geometry("700x500")
@@ -36,16 +51,9 @@ class App(ctk.CTk):
     def system_sub_title(self):
         span = ctk.CTkLabel(self,text='Por favor, preencha todos os campos do formulário!',font=('Century Gothic bold',16),text_color=['#000','#fff']).pack(pady=20)
 
-    def system_main(self):
-        def submit():
-            name = name_value.get();
-            contact= contact_value.get()
-            address = address_value.get()
-            age = age_value.get()
-            obs= obs_text_box.get(0.0,END)
-            gender = gender_box.get()
 
-            return
+    def system_main(self):
+
         def clear():
             name_value.set("");
             contact_value.set("")
@@ -53,7 +61,28 @@ class App(ctk.CTk):
             age_value.set("")
             obs_text_box.delete(0.0,END)
 
-            return
+        def submit():
+            name = name_value.get();
+            contact= contact_value.get()
+            address = address_value.get()
+            age = age_value.get()
+            gender = gender_box.get()
+            obs= obs_text_box.get(0.0,END)
+
+            archive = openpyxl.load_workbook("Clientes.xlsx")
+            paper = archive.active
+            paper.cell(column=1,row=paper.max_row+1,value=name)
+            paper.cell(column=2,row=paper.max_row,value=contact)
+            paper.cell(column=3,row=paper.max_row,value=address)
+            paper.cell(column=4,row=paper.max_row,value=age)    
+            paper.cell(column=5,row=paper.max_row,value=gender)
+            paper.cell(column=6,row=paper.max_row,value=obs)
+            
+            archive.save(r"Clientes.xlsx")
+            messagebox.showinfo("Sistema","Dados salvos com sucesso!")
+
+            clear()
+
         
         name_value = StringVar()
         lb_name = ctk.CTkLabel(self,text='Nome:',font=('Century Gothic bold',16),text_color=['#000','#fff']).place(x=50,y=120)
@@ -72,10 +101,12 @@ class App(ctk.CTk):
         age_entry = ctk.CTkEntry(self,width=150,font=("Century Gohtic bold",16),textvariable=age_value,bg_color='transparent',fg_color='transparent').place(x=260,y=210)
 
         lb_gender = ctk.CTkLabel(self,text='Gênero:',font=('Century Gothic bold',16),text_color=['#000','#fff']).place(x=420,y=180)
-        gender_box = ctk.CTkComboBox(self,values=['Masculino','Feminino'],width=130,font=("Century Gohtic bold",14)).place(x=420,y=210)
-
+        gender_box = ctk.CTkComboBox(self,values=['Masculino','Feminino'],width=130,font=("Century Gohtic bold",14))
+        gender_box.set("Masculino")
+        gender_box.place(x=420, y=210)
         lb_obs = ctk.CTkLabel(self,text='Observações:',font=('Century Gothic bold',16),text_color=['#000','#fff']).place(x=50,y=240)
-        obs_text_box = ctk.CTkTextbox(self,width=570,height=150,font=("arial",18),fg_color='transparent',border_color='#aaa',border_width=2).place(x=50,y=270)
+        obs_text_box = ctk.CTkTextbox(self,width=570,height=150,font=("arial",18),fg_color='transparent',border_color='#aaa',border_width=2)
+        obs_text_box.place(x=50,y=270)
 
         bttn_submit= ctk.CTkButton(self,text="Enviar",width=120,command=submit,fg_color='#151',hover_color='#181').place(x=420,y=460)
         bttn_clear= ctk.CTkButton(self,text="Limpar",width=120,command=clear,fg_color='#611',hover_color='#911').place(x=560,y=460)
