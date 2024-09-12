@@ -30,34 +30,55 @@ class App(ctk.CTk):
 
     def system_title(self):
         frame = ctk.CTkFrame(self,width=700,height=50,corner_radius=0,bg_color="teal",fg_color='teal').place(x=0,y=12)
-        title = ctk.CTkLabel(frame, text='Sistema de Gestão de Clientes', font=('Century Gothic bold', 24), text_color='#fff')
+        title = ctk.CTkLabel(frame, text='Sistema de Gestão de Clientes', bg_color='teal',fg_color='teal',font=('Century Gothic bold', 24), text_color='#fff')
         title.pack(pady=20)
 
     def system_sub_title(self):
         span = ctk.CTkLabel(self,text='Por favor, preencha todos os campos do formulário!',font=('Century Gothic bold',16),text_color=['#000','#fff']).pack(pady=20)
 
     def system_main(self):
+        def submit():
+            name = name_value.get();
+            contact= contact_value.get()
+            address = address_value.get()
+            age = age_value.get()
+            obs= obs_text_box.get(0.0,END)
+            gender = gender_box.get()
 
-        lb_name = ctk.CTkLabel(self,text='Nome',font=('Century Gothic bold',16),text_color=['#000','#fff']).place(x=50,y=120)
-        name_entry = ctk.CTkEntry(self,width=350,font=("Century Gohtic bold",16),bg_color='transparent',fg_color='transparent').place(x=50,y=150)
+            return
+        def clear():
+            name_value.set("");
+            contact_value.set("")
+            address_value.set("")
+            age_value.set("")
+            obs_text_box.delete(0.0,END)
 
-        lb_contact = ctk.CTkLabel(self,text='Telefone',font=('Century Gothic bold',16),text_color=['#000','#fff']).place(x=420,y=120)
-        contact_entry = ctk.CTkEntry(self,width=200,font=("Century Gohtic bold",16),bg_color='transparent',fg_color='transparent').place(x=420,y=150)
+            return
+        
+        name_value = StringVar()
+        lb_name = ctk.CTkLabel(self,text='Nome:',font=('Century Gothic bold',16),text_color=['#000','#fff']).place(x=50,y=120)
+        name_entry = ctk.CTkEntry(self,width=350,font=("Century Gohtic bold",16),textvariable=name_value,bg_color='transparent',fg_color='transparent').place(x=50,y=150)
 
-        lb_address = ctk.CTkLabel(self,text='Endereço',font=('Century Gothic bold',16),text_color=['#000','#fff']).place(x=50,y=180)
-        address_entry = ctk.CTkEntry(self,width=200,font=("Century Gohtic bold",16),bg_color='transparent',fg_color='transparent').place(x=50,y=200)
+        contact_value = StringVar()
+        lb_contact = ctk.CTkLabel(self,text='Telefone:',font=('Century Gothic bold',16),text_color=['#000','#fff']).place(x=420,y=120)
+        contact_entry = ctk.CTkEntry(self,width=200,font=("Century Gohtic bold",16),textvariable=contact_value,bg_color='transparent',fg_color='transparent').place(x=420,y=150)
 
-        lb_age_ = ctk.CTkLabel(self,text='Idade',font=('Century Gothic bold',16),text_color=['#000','#fff']).place(x=260,y=180)
-        age_entry = ctk.CTkEntry(self,width=150,font=("Century Gohtic bold",16),bg_color='transparent',fg_color='transparent').place(x=260,y=200)
+        address_value = StringVar()
+        lb_address = ctk.CTkLabel(self,text='Endereço:',font=('Century Gothic bold',16),text_color=['#000','#fff']).place(x=50,y=180)
+        address_entry = ctk.CTkEntry(self,width=200,font=("Century Gohtic bold",16),textvariable=address_value,bg_color='transparent',fg_color='transparent').place(x=50,y=210)
 
+        age_value = StringVar()
+        lb_age_ = ctk.CTkLabel(self,text='Idade:',font=('Century Gothic bold',16),text_color=['#000','#fff']).place(x=260,y=180)
+        age_entry = ctk.CTkEntry(self,width=150,font=("Century Gohtic bold",16),textvariable=age_value,bg_color='transparent',fg_color='transparent').place(x=260,y=210)
 
-        lb_gender = ctk.CTkLabel(self,text='Gênero',font=('Century Gothic bold',16),text_color=['#000','#fff']).place(x=420,y=180)
-        gender_box = ctk.CTkComboBox(self,values=['Masculino','Feminino'],width=100,font=("Century Gohtic bold",14)).place(x=420,y=200)
+        lb_gender = ctk.CTkLabel(self,text='Gênero:',font=('Century Gothic bold',16),text_color=['#000','#fff']).place(x=420,y=180)
+        gender_box = ctk.CTkComboBox(self,values=['Masculino','Feminino'],width=130,font=("Century Gohtic bold",14)).place(x=420,y=210)
 
+        lb_obs = ctk.CTkLabel(self,text='Observações:',font=('Century Gothic bold',16),text_color=['#000','#fff']).place(x=50,y=240)
+        obs_text_box = ctk.CTkTextbox(self,width=570,height=150,font=("arial",18),fg_color='transparent',border_color='#aaa',border_width=2).place(x=50,y=270)
 
-        lb_obs = ctk.CTkLabel(self,text='Observações',font=('Century Gothic bold',16),text_color=['#000','#fff']).place(x=50,y=230)
-        options_text_box = ctk.CTkTextbox(self,width=500,height=150,font=("arial",18),fg_color='transparent',border_color='#aaa',border_width=2).place(x=50,y=260)
-
+        bttn_submit= ctk.CTkButton(self,text="Enviar",width=120,command=submit,fg_color='#151',hover_color='#181').place(x=420,y=460)
+        bttn_clear= ctk.CTkButton(self,text="Limpar",width=120,command=clear,fg_color='#611',hover_color='#911').place(x=560,y=460)
 
 
 if __name__=="__main__":
