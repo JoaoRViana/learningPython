@@ -44,8 +44,8 @@ class App(ctk.CTk):
         ctk.set_appearance_mode(new_appearance_mode)
 
     def system_title(self):
-        frame = ctk.CTkFrame(self,width=700,height=50,corner_radius=0,bg_color="teal",fg_color='teal').place(x=0,y=12)
-        title = ctk.CTkLabel(frame, text='Sistema de Gestão de Clientes', bg_color='teal',fg_color='teal',font=('Century Gothic bold', 24), text_color='#fff')
+        frame = ctk.CTkFrame(self,width=600,height=50,corner_radius=0,bg_color=["#271",'#121'],fg_color=['#271','#121']).place(x=50,y=12)
+        title = ctk.CTkLabel(frame, text='Sistema de Gestão de Clientes', bg_color=['#271','#121'],fg_color=['#271','#121'],font=('Century Gothic bold', 24), text_color=['#000','#fff'])
         title.pack(pady=20)
 
     def system_sub_title(self):
@@ -62,12 +62,25 @@ class App(ctk.CTk):
             obs_text_box.delete(0.0,END)
 
         def submit():
+            
             name = name_value.get();
             contact= contact_value.get()
             address = address_value.get()
             age = age_value.get()
             gender = gender_box.get()
             obs= obs_text_box.get(0.0,END)
+            
+            try:
+                age_number=int(age);
+                contact_number=int(contact)
+                pass
+            except :
+                messagebox.showinfo("Sistema","Preenchimento incorreto da idade ou telefone")
+                return
+
+            if(len(name)<3 or age_number<1 or len(contact)<8 or len(address)<3 or len(obs)<3):
+                messagebox.showinfo("Sistema","Há informações faltando")
+                return
 
             archive = openpyxl.load_workbook("Clientes.xlsx")
             paper = archive.active
